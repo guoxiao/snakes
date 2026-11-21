@@ -155,12 +155,6 @@ loop1:
             mov direction,dl
         .elseif al=='Q' ||al=='q'||ah==1
             jmp over
-
-        .elseif ah!=75 &&ah!=72 &&ah!=77 &&ah!=80
-            getchar
-            .if al=='Q'||al=='q'||ah==1
-                jmp over
-            .endif
         .endif
     .endif
 ;    .else
