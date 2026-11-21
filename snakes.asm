@@ -188,7 +188,7 @@ loop1:
             mov ah,line[bx]
 
             .if al==0
-                mov al,77
+                mov al,79
             .endif
             dec al
             inc bl
