@@ -94,22 +94,36 @@ getchar macro
     int 16h
 endm
 
+;compute the next head position (with the same wrap rules as the move)
+;and end the game if it hits the body.
 readscreen macro
     push dx
     push bx
-    mov bh,0
-    mov ah,03h
-    int 10h
+    mov dh,line[bx]
+    mov dl,column[bx]
     mov al,direction
     .if al==1
         inc dl
+        .if dl>=79
+            sub dl,79
+        .endif
     .elseif al==2
         inc dh
+        .if dh>=23
+            sub dh,23
+        .endif
     .elseif al==3
+        .if dl==0
+            mov dl,79
+        .endif
         dec dl
-    .elseif al==4
+    .else
+        .if dh==0
+            mov dh,23
+        .endif
         dec dh
     .endif
+    mov bh,0
     mov ah,02h
     int 10h
 
