@@ -97,8 +97,9 @@ checkchar macro
     int 16h
 endm
 
+;enhanced read, paired with the enhanced check (ah=11h) above
 getchar macro
-    mov ah,0
+    mov ah,10h
     int 16h
 endm
 
