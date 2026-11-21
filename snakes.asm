@@ -95,7 +95,8 @@ getchar macro
 endm
 
 ;compute the next head position (with the same wrap rules as the move)
-;and end the game if it hits the body.
+;and end the game if it hits the body. The tail '-' is vacated this
+;frame, so moving onto it is allowed.
 readscreen macro
     push dx
     push bx
@@ -129,7 +130,7 @@ readscreen macro
 
     mov ah,08h
     int 10h
-    .if al=='-' || al=='='
+    .if al=='='
         jmp over
     .endif
     pop bx
