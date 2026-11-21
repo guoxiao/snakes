@@ -2,6 +2,7 @@
 .model small
 .386
 .stack 200h
+DELAY_TICKS equ 2 ;BIOS timer ticks per frame (~55ms each)
 .data
     line db 256 dup(12)
     column db 30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45
@@ -69,15 +70,22 @@ clear macro
 endm
 
 
+;wait DELAY_TICKS ticks of the BIOS timer counter at 0040:006C
 delay macro
     local dly
     push ax
-    push cx
-    mov cx,100000
+    push bx
+    push es
+    mov ax,40h
+    mov es,ax
+    mov bx,es:[6Ch]
 dly:
-    xor ax,ax
-    loop dly
-    pop cx
+    mov ax,es:[6Ch]
+    sub ax,bx
+    cmp ax,DELAY_TICKS
+    jb dly
+    pop es
+    pop bx
     pop ax
 endm
 
