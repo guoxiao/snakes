@@ -153,7 +153,7 @@ endm
     clear
     ;hide
     mov ah,01h
-    mov cx,1000h
+    mov cx,2000h
     int 10h
 
     mov bx,13
@@ -237,5 +237,13 @@ loop1:
 
     jmp loop1
 over:
+    ;reset text mode (restores default colors, clears screen)
+    mov al,03h
+    mov ah,00
+    int 10h
+    ;restore the standard color text cursor
+    mov ah,01h
+    mov cx,0607h
+    int 10h
 .exit 0
 end
